@@ -12,7 +12,6 @@ const AuthProvider = ({children}) => {
     
     useEffect(() => {
         const authUser = async () =>{
-            console.log("first")
             const token = localStorage.getItem('token')
             if(!token){
                 setLoading(false)

@@ -24,7 +24,7 @@ export default function Login() {
  
   async function handleSubmit(e) {
     e.preventDefault();  
-    if(alert){
+    if(alert.msg){
       setTimeout(() => {
         setAlert({});
       }, 3500);
