@@ -1,7 +1,7 @@
+@import 'react-toastify/dist/ReactToastify.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 h1,h2,h3,h4{
     font-family: 'Roboto Slab', serif;
 }

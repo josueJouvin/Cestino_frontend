@@ -1,31 +1,26 @@
-import { useState } from "react";
-import ButtomInput from "./ButtomInput";
+import { useState, useEffect } from "react";
 import { Check, Close} from "./Icons";
-import ListProducts from "./ListProducts";
-import { useEffect } from "react";
-import useValidation from "../hooks/useValidation";
-import Alert from "./Alert";
 import { generateId } from "../helpers/generateId";
 
-const Form = ({changeShow}) => {
-    const { alert, setAlert } = useValidation()
-    const [subTotal, setSubtotal] = useState()
-    const [total, setTotal] = useState()
-    const [percentage, setPercentage] = useState()
-    const [profit, setProfit] = useState()
-    const [products, setProducts] = useState([])
+import ButtomInput from "./ButtomInput";
+import ListProducts from "./ListProducts";
+import useValidation from "../hooks/useValidation";
+import Alert from "./Alert";
+import useProducts from "../hooks/useProducts";
+import useProductCalculations from "../hooks/useProductCalculations";
+import useCestino from "../hooks/useCestino";
 
+const Form = ({changeShow}) => {
+    const { products, setProducts } = useProducts()
+    const { percentage, profit, setPercentage, subTotal, total } = useProductCalculations()
+    const { alert, setAlert } = useValidation()
+    const { saveCestino, setSave } = useCestino()
+    const [name, setName] = useState("")
     const [formProducts, setFormProducts] = useState({
         nameproduct: "",
         quantity: "",
         unitmeasure: "",
         price: "",
-    })
-    const [formData, setFormData] = useState({
-        name: "",
-        subTotal: "",
-        profit: "",
-        total: "",
     })
 
     if(alert.error){
@@ -33,66 +28,68 @@ const Form = ({changeShow}) => {
           setAlert({});
         }, 3500);
     }
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setFormData(prevState => ({
-          ...prevState, [name]: value
-        }))
-    }
-    const handleChangeProducts = e => {
+  
+    function handleChangeProducts(e){
         const {name, value} = e.target;
         setFormProducts(prevState => ({
             ...prevState, [name]: value
         }))
-    }
-    const addProduct = () =>{
+    }   
+
+    function addProduct(e){
+        e.preventDefault()
         const {nameproduct, price, quantity, unitmeasure} = formProducts
-        if([nameproduct.trim(), price.trim(), quantity.trim(), unitmeasure.trim()].includes("")){
-            setAlert({ msg: "existen campos vacios en el producto", error: true });
+
+        if([nameproduct,price,quantity,unitmeasure].includes("")){
+            setAlert({ msg: "el producto no debe tener campos vacios", error: true });
             return
         }
-        const newProduct={
-            ...formProducts,
-            id: generateId()
+        if(formProducts.id){
+            const edit = products.map(prod => prod.id === formProducts.id ? formProducts : prod )
+            setProducts(edit) 
+            return 
+        }else{
+            const newProduct={
+                ...formProducts,
+                id: generateId()
+            }
+            setProducts(prevProducts => [...prevProducts, newProduct]);    
+            return     
         }
-        setProducts(prevProducts => [...prevProducts, newProduct]);
+           
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        if(name.trim() === ""){
+            setAlert({ msg: "El nombre de la canasta no puede estar vació", error: true });
+            return
+        }
+        if(!products.length){
+            setAlert({ msg: "debe haber al menos 1 producto", error: true });
+            return
+        }
+        
+        setAlert({})
+        saveCestino({name, products, subTotal, percentage, profit, total})
+        setProducts([])
+        setSave(true)
+        changeShow()
+    }
+
+    useEffect(()=>{
         setFormProducts({
             nameproduct: "",
             quantity: "",
             unitmeasure: "",
             price: ""
-        });
-    }
-
-
-    useEffect(() => {
-        const calculateSubtotal = () =>{
-            const subTotal = products.reduce((accumulator, currentValue) => accumulator + Number(currentValue.price), 0)
-            setSubtotal(subTotal)
-        }
-    calculateSubtotal()
+        });   
     },[products])
-
-    useEffect(() => {
-        const calculatePorcentaje = () =>{
-            const calc = (subTotal * percentage)/100
-            setProfit(calc)
-        }
-        calculatePorcentaje()
-    },[percentage, subTotal])
-
-    useEffect(() => {
-        const calculateTotal = () =>{
-            const calc = percentage ? subTotal + profit : subTotal
-            setTotal(calc)
-        }
-        calculateTotal()
-    },[percentage, subTotal, profit])
 
   return (
     <section className="absolute inset-0">
       <div className="inset-0 fixed grid place-items-center bg-gray-800/80 overflow-y-auto z-50">
-        <form className="bg-slate-200 md:w-3/4 xl:w-3/5 2xl:w-1/2 p-7 mx-auto rounded-xl">
+        <form onSubmit={handleSubmit} noValidate className="bg-slate-200 md:w-3/4 xl:w-3/5 2xl:w-1/2 p-7 mx-auto rounded-xl">
 
             <section className="flex justify-between items-center mb-4">
                 <span className="font-bold text-2xl text-lime-600">CESTINO</span>
@@ -102,19 +99,19 @@ const Form = ({changeShow}) => {
             </section>
 
             <div className="mb-4">
-                <label htmlFor="image" className="inline-block text-gray-800 font-bold mb-2">Imagen</label>
+                { alert.msg && <Alert alert={alert}/>}
+                <label htmlFor="image" className="inline-block text-gray-800 font-bold mb-2">Imagen de Canasta</label>
                 <input type="file" id="image" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500"/>
             </div>
 
             { /*input de canasta*/}
             <div className="mb-4">
                 <label htmlFor="name" className="inline-block text-gray-800 font-bold mb-2">Nombre de Canasta</label>
-                <input type="text" id="name" name="name" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500" placeholder="Canasta de Víveres, Torta de Chocolate, ..." value={formData.name} onChange={handleChange} required/>
+                <input type="text" id="name" name="name" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500" placeholder="Canasta de Víveres, Torta de Chocolate, ..." value={name} onChange={e => setName(e.target.value)} required/>
             </div>
 
             {/*input de productos*/}
-            <div className="mb-4">
-                    { alert.msg && <Alert alert={alert}/>}
+            <section className="mb-4">
                     <label htmlFor="nameproduct" className="inline-block text-gray-800 font-bold mb-2">Producto</label>
                     <div className="flex gap-3 items-center flex-wrap md:flex-nowrap">
                         <input type="text" id="nameproduct" name="nameproduct" className=" w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500" placeholder="Carne, Aceite, Chocolate, Manzana, ..." value={formProducts.nameproduct} onChange={handleChangeProducts} required/>
@@ -149,7 +146,7 @@ const Form = ({changeShow}) => {
                             <Check/>
                         </button>
                     </div>             
-            </div>
+            </section>
 
             {/*lista de productos*/}          
             {products.length ?  
@@ -162,9 +159,9 @@ const Form = ({changeShow}) => {
                         </div>
                     </li>
                     {products.map(product => (
-                     <ListProducts key={product.id} product={product} products={products} setProducts={setProducts}/>
+                     <ListProducts key={product.id} product={product} setFormProducts={setFormProducts}/>
                     ))}
-                </ul> : "Aun no tienes productos ingresados"}
+                </ul> : <p className="text-center font-semibold my-2 text-lg">Aún no tienes productos ingresados</p>}
             
             {/*sumatoria, total*/}
             <section className="mt-3 flex flex-col items-end w-full gap-1 md:text-lg">

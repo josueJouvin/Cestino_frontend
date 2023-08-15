@@ -1,5 +1,4 @@
 
-
 const EmailInput = ({setEmail, email}) => {
   return (
     <div className="my-5">

@@ -10,11 +10,13 @@ import NewPassword from "./pages/NewPassword";
 import ManageProducts from "./pages/ManageProducts";
 
 import { AuthProvider } from "./context/AuthProvider";
+import { CestinoProvider } from "./context/CestinoProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <CestinoProvider>
           <Routes>
             <Route path="/" element={<AuthLayout />}>
               <Route index element={<Login />} />
@@ -28,6 +30,7 @@ function App() {
               <Route index element={<ManageProducts />} />
             </Route>
           </Routes>
+        </CestinoProvider>  
       </AuthProvider>
     </BrowserRouter>
   );

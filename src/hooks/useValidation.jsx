@@ -9,14 +9,14 @@ const useValidation = () =>{
       repeatPassword: "",
     })
   
-    const handleChange = e => {
+    function handleChange(e) {
       const {name, value} = e.target;
       setFormData(prevState => ({
         ...prevState, [name]: value
       }))
     }
     
-    const validateName = () =>{
+    function validateName() {
       const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s'_-]+$/
 
       if(!nameRegex.test(formData.name)){
@@ -25,16 +25,16 @@ const useValidation = () =>{
       return true
     }
 
-    const validateEmail = () => {
+    function validateEmail() {
       const emailRegex = /^[a-zA-Z0-9._%+-]*[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]*[a-zA-Z][a-zA-Z0-9._%+-]+\.[a-zA-Z]{2,}$/;
 
       if(!emailRegex.test(formData.email)){
         return setAlert({msg: "Correo no valido", error:true})
       }
       return true
-    };
+    }
 
-    const validatePassword = () => {
+    function validatePassword() {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+\\/.-])[A-Za-z\d@$!%*?&+\\/.-]{8,}$/;
       if (!passwordRegex.test(formData.password)) {
 
@@ -46,7 +46,7 @@ const useValidation = () =>{
         error: true, mod: true});
       }
       return true
-    };
+    }
   
     return{formData,handleChange, validateName, validateEmail, validatePassword, alert, setAlert}
   }
