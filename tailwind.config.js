@@ -5,8 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns:{
+        "responsive": "repeat(auto-fit, minmax(min(100%, 300px), 1fr))"
+      }
+    },
   },
-  plugins: [],
+  plugins: [],  
 }
 

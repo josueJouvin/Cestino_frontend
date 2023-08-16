@@ -7,8 +7,9 @@ import { ProductsProvider } from "../context/ProductProvider";
 import { ToastContainer, toast } from "react-toastify";
 import useCestino from "../hooks/useCestino";
 
+
 const AdminLayout = () => {
-  const { save } = useCestino();
+  const { save} = useCestino();
   const { show, changeShow } = useSwitch();
   const { auth, loading } = useAuth();
   if (loading) return "cargando...";
@@ -24,6 +25,7 @@ const AdminLayout = () => {
       progress: undefined,
       theme: "colored",
     });
+    
   }
 
   return (
