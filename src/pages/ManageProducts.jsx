@@ -10,9 +10,9 @@ const ManageProducts = () => {
   return (
     <>
       {show && <Form changeShow={changeShow}/>}
-      <div className="flex flex-col justify-center items-center container mx-auto my-7 md:mt-12 lg:my-0">
+      <div className="flex flex-col justify-center items-center my-7 container mx-auto xl:px-8 md:mt-12 lg:my-0">
         {cestini.length ? (
-            <div className={`grid ${cestini.length > 1 ? "grid-cols-responsive w-[90%]": "w-72 md:w-96"} gap-8 lg:gap-12`}>
+            <div className={`grid ${cestini.length > 1 ? `grid-cols-responsive ${cestini.length === 2 ? "w-[75%]" : "w-[90%]"}`: "w-[90%] md:w-[26rem]"} gap-8 lg:gap-12`}>
               {cestini.map((cestino) => ( 
                 <Cestino key={cestino._id} cestino={cestino}/>
               ))}
