@@ -1,9 +1,9 @@
 import { EditIcon, TrashIcon } from "./Icons";
-import useProducts from "../hooks/useProducts";
 import { useEffect } from "react";
+import useCestino from "../hooks/useCestino";
 
 function ListProducts({ product, setFormProducts }) {
-  const {products, setProducts, setProductEdit, productEdit} = useProducts()
+  const {products, setProducts, setProductEdit, productEdit} = useCestino()
   const { nameproduct, quantity, unitmeasure, price } = product;
 
   useEffect(() => {
@@ -12,17 +12,17 @@ function ListProducts({ product, setFormProducts }) {
         quantity: productEdit.quantity,
         unitmeasure: productEdit.unitmeasure,
         price: productEdit.price,
-        id: productEdit.id
+        id: productEdit.id ? productEdit.id : productEdit._id
     })
 },[productEdit])
 
-  function deleted (id){
-    const deleted = products.filter(produ => produ.id !== id)
-    setProducts(deleted)
-  }
-
   function modified(product){ 
     setProductEdit(product)
+  }
+
+  function deleted (id){
+    const deleted = products.filter(produ => produ.id !== id && produ._id !== id)
+    setProducts(deleted)
   }
 
   return (
@@ -35,7 +35,7 @@ function ListProducts({ product, setFormProducts }) {
           <button type="button" onClick={() => modified(product)}>
             <EditIcon />
           </button>
-          <button type="button" onClick={() => deleted(product.id)}>
+          <button type="button" onClick={() => deleted(product.id ? product.id : product._id)}>
             <TrashIcon />
           </button>
         </div>

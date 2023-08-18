@@ -5,6 +5,10 @@ const CestinoContext = createContext();
 export const CestinoProvider = ({ children }) => {
   const [save, setSave] = useState(false);
   const [cestini, setCestini] = useState([]);
+  const [cestino, setCestino] = useState({})
+  const [productEdit, setProductEdit] = useState({});    
+  const [products, setProducts] = useState([]);    
+  const [editMode, setEditMode]= useState(false)
 
   useEffect(() => {
    async function getCestino() {
@@ -44,8 +48,12 @@ export const CestinoProvider = ({ children }) => {
       console.log(error.response.data.msg);
     }
   }
+
+  const setEdit = (cestino) =>{
+    setCestino(cestino)
+  }
   return (
-    <CestinoContext.Provider value={{ cestini, saveCestino, save, setSave }}>
+    <CestinoContext.Provider value={{ cestini, saveCestino, save, setSave, setEdit, cestino, editMode, setEditMode, products, setProducts, productEdit,setProductEdit }}>
       {children}
     </CestinoContext.Provider>
   );

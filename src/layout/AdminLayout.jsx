@@ -3,7 +3,6 @@ import useAuth from "../hooks/useAuth";
 import NavMenu from "../components/NavMenu";
 import { NavOpen } from "../components/Icons";
 import useSwitch from "../hooks/useSwitch";
-import { ProductsProvider } from "../context/ProductProvider";
 import { ToastContainer, toast } from "react-toastify";
 import useCestino from "../hooks/useCestino";
 
@@ -30,7 +29,6 @@ const AdminLayout = () => {
 
   return (
     <>
-      <ProductsProvider>
         <div className="lg:flex lg:min-h-screen">
           <ToastContainer />
           <button
@@ -48,7 +46,6 @@ const AdminLayout = () => {
             <Navigate to="/" />
           )}
         </div>
-      </ProductsProvider>
     </>
   );
 };

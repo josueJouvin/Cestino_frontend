@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import useProducts from "./useProducts"
+import useCestino from "./useCestino"
 
 const useProductCalculations = () => {
-    const {products} = useProducts()
+    const { products } = useCestino()
     const [subTotal, setSubtotal] = useState()
     const [total, setTotal] = useState()
     const [percentage, setPercentage] = useState()

@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       gridTemplateColumns:{
-        "responsive": "repeat(auto-fit, minmax(min(100%, 300px), 1fr))"
+        "responsive": "repeat(auto-fit, minmax(min(100%, 300px), 1fr));"
       }
     },
   },

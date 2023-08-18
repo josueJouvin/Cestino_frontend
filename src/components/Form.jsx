@@ -6,24 +6,23 @@ import ButtomInput from "./ButtomInput";
 import ListProducts from "./ListProducts";
 import useValidation from "../hooks/useValidation";
 import Alert from "./Alert";
-import useProducts from "../hooks/useProducts";
 import useProductCalculations from "../hooks/useProductCalculations";
 import useCestino from "../hooks/useCestino";
 
 const Form = ({changeShow}) => {
-    const { products, setProducts } = useProducts()
     const { percentage, profit, setPercentage, subTotal, total } = useProductCalculations()
     const { alert, setAlert } = useValidation()
-    const { saveCestino, setSave } = useCestino()
+    const { saveCestino, setSave, cestino, editMode, setEditMode, products, setProducts} = useCestino()
     const [name, setName] = useState("")
+    const [id, setId] = useState(null)
     const [formProducts, setFormProducts] = useState({
         nameproduct: "",
         quantity: "",
         unitmeasure: "",
-        price: "",
+        price: ""
     })
-
-    if(alert.error){
+    
+    if(alert.error){    
         setTimeout(() => {
           setAlert({});
         }, 3500);
@@ -47,14 +46,12 @@ const Form = ({changeShow}) => {
         if(formProducts.id){
             const edit = products.map(prod => prod.id === formProducts.id ? formProducts : prod )
             setProducts(edit) 
-            return 
         }else{
             const newProduct={
                 ...formProducts,
                 id: generateId()
             }
-            setProducts(prevProducts => [...prevProducts, newProduct]);    
-            return     
+            setProducts(prevProducts => [...prevProducts, newProduct]);       
         }
            
     }
@@ -78,13 +75,27 @@ const Form = ({changeShow}) => {
     }
 
     useEffect(()=>{
+        if(cestino?.name && editMode){
+            setName(cestino.name)
+            setProducts(cestino.products)
+            setPercentage(cestino.percentage)
+        }
+    },[cestino, editMode])
+
+    useEffect(()=>{
         setFormProducts({
             nameproduct: "",
             quantity: "",
             unitmeasure: "",
             price: ""
-        });   
+        }); 
     },[products])
+
+    function closeForm() {
+        setProducts([])
+        changeShow()
+        setEditMode(false)
+    }
 
   return (
     <section className="absolute inset-0">
@@ -93,7 +104,7 @@ const Form = ({changeShow}) => {
 
             <section className="flex justify-between items-center mb-4">
                 <span className="font-bold text-2xl text-lime-600">CESTINO</span>
-                <button onClick={changeShow}>
+                <button onClick={closeForm}>
                     <Close />
                 </button>
             </section>
@@ -159,7 +170,7 @@ const Form = ({changeShow}) => {
                         </div>
                     </li>
                     {products.map(product => (
-                     <ListProducts key={product.id} product={product} setFormProducts={setFormProducts}/>
+                     <ListProducts key={product.id ? product.id : product._id} product={product} setFormProducts={setFormProducts}/>
                     ))}
                 </ul> : <p className="text-center font-semibold my-2 text-lg">Aún no tienes productos ingresados</p>}
             
