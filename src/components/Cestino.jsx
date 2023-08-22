@@ -4,9 +4,9 @@ import useSwitch from "../hooks/useSwitch";
 import Form from "./Form";
 
 const Cestino = ({ cestino }) => {
-  const {setEdit, setEditMode} = useCestino()
+  const {setEdit, setEditMode, deletedCestino} = useCestino()
   const {show, changeShow} = useSwitch()
-  const { name, profit, total, products, _id } = cestino;
+  const { name, profit, total, products} = cestino;
 
   function handleEdit() {
     setEdit(cestino) 
@@ -53,6 +53,7 @@ const Cestino = ({ cestino }) => {
           Editar
         </button>
         <button
+          onClick={() => deletedCestino(cestino._id)}
           data-ripple-light="true"
           type="button"
           className="rounded-lg bg-red-600 py-3 px-5 text-center text-sm font-bold uppercase text-white hover:bg-red-700 shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]"

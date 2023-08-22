@@ -3,29 +3,12 @@ import useAuth from "../hooks/useAuth";
 import NavMenu from "../components/NavMenu";
 import { NavOpen } from "../components/Icons";
 import useSwitch from "../hooks/useSwitch";
-import { ToastContainer, toast } from "react-toastify";
-import useCestino from "../hooks/useCestino";
-
+import { ToastContainer} from "react-toastify";
 
 const AdminLayout = () => {
-  const { save} = useCestino();
   const { show, changeShow } = useSwitch();
   const { auth, loading } = useAuth();
   if (loading) return "cargando...";
-
-  if (save) {
-    toast.success("Agregado correctamente", {
-      position: "top-right",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-    
-  }
 
   return (
     <>

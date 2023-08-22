@@ -16,6 +16,16 @@ function ListProducts({ product, setFormProducts }) {
     })
 },[productEdit])
 
+useEffect(()=>{
+  setFormProducts({
+      nameproduct: "",
+      quantity: "",
+      unitmeasure: "",
+      price: "",
+      id:""
+  }); 
+},[products])
+
   function modified(product){ 
     setProductEdit(product)
   }

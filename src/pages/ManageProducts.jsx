@@ -14,7 +14,7 @@ const ManageProducts = () => {
       <section className="flex flex-col justify-center items-center my-7 container mx-auto xl:px-8 md:mt-12">
         {cestini.length ? (
             <div className={`grid ${cestini.length > 1 ? "grid-cols-responsive w-[90%] xl:w-[85%]": "w-[90%] md:w-[26rem]"} gap-8 lg:gap-12`}>
-              {cestini.slice(0,3).reverse().map((cestino) => ( 
+              {cestini.slice(0,3).map((cestino) => ( 
                 <Cestino key={cestino._id} cestino={cestino}/>
               ))}
             </div>
@@ -30,7 +30,7 @@ const ManageProducts = () => {
           {cestini.length > 3 && <Link className="px-5 py-3 rounded-md bg-lime-500 hover:bg-lime-600 transition-colors text-white font-bold text-xl">
             Ver mas canastas
           </Link>}
-          <button className="px-5 py-3 rounded-md bg-lime-500 hover:bg-lime-600 transition-colors text-white font-bold text-xl" onClick={changeShow}>
+          <button className={`px-5 py-3 rounded-md bg-lime-500 hover:bg-lime-600 transition-colors text-white font-bold text-xl ${cestini.length ? "fixed left-[8%] bottom-[5%] md:static" : "static" }`} onClick={changeShow}>
             Crear Canasta
           </button>
         </div>

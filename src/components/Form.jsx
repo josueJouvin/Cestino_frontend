@@ -8,11 +8,12 @@ import useValidation from "../hooks/useValidation";
 import Alert from "./Alert";
 import useProductCalculations from "../hooks/useProductCalculations";
 import useCestino from "../hooks/useCestino";
+import { toast } from "react-toastify";
 
 const Form = ({changeShow}) => {
     const { percentage, profit, setPercentage, subTotal, total } = useProductCalculations()
     const { alert, setAlert } = useValidation()
-    const { saveCestino, setSave, cestino, editMode, setEditMode, products, setProducts} = useCestino()
+    const { saveCestino, cestino, editMode, setEditMode, products, setProducts} = useCestino()
     const [name, setName] = useState("")
     const [id, setId] = useState(null)
     const [formProducts, setFormProducts] = useState({
@@ -22,6 +23,15 @@ const Form = ({changeShow}) => {
         price: ""
     })
     
+    useEffect(()=>{
+        if(cestino?.name && editMode){
+            setName(cestino.name)
+            setProducts(cestino.products)
+            setPercentage(cestino.percentage)
+            setId(cestino._id)
+        }
+    },[cestino, editMode])
+
     if(alert.error){    
         setTimeout(() => {
           setAlert({});
@@ -43,8 +53,9 @@ const Form = ({changeShow}) => {
             setAlert({ msg: "el producto no debe tener campos vacios", error: true });
             return
         }
+        
         if(formProducts.id){
-            const edit = products.map(prod => prod.id === formProducts.id ? formProducts : prod )
+            const edit = products.map(prod => prod.id === formProducts.id || prod._id === formProducts.id ? formProducts : prod )
             setProducts(edit) 
         }else{
             const newProduct={
@@ -52,11 +63,10 @@ const Form = ({changeShow}) => {
                 id: generateId()
             }
             setProducts(prevProducts => [...prevProducts, newProduct]);       
-        }
-           
+        }   
     }
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e) {    
         e.preventDefault()
         if(name.trim() === ""){
             setAlert({ msg: "El nombre de la canasta no puede estar vació", error: true });
@@ -66,35 +76,30 @@ const Form = ({changeShow}) => {
             setAlert({ msg: "debe haber al menos 1 producto", error: true });
             return
         }
-        
+
+        toast.success(id ? "Modificado correctamente" : "Agregado correctamente", {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+
+        saveCestino({name, products, subTotal, percentage, profit, total, id})
         setAlert({})
-        saveCestino({name, products, subTotal, percentage, profit, total})
         setProducts([])
-        setSave(true)
+        setName("")
+        setEditMode(false)
         changeShow()
     }
 
-    useEffect(()=>{
-        if(cestino?.name && editMode){
-            setName(cestino.name)
-            setProducts(cestino.products)
-            setPercentage(cestino.percentage)
-        }
-    },[cestino, editMode])
-
-    useEffect(()=>{
-        setFormProducts({
-            nameproduct: "",
-            quantity: "",
-            unitmeasure: "",
-            price: ""
-        }); 
-    },[products])
-
     function closeForm() {
+        setEditMode(false)
         setProducts([])
         changeShow()
-        setEditMode(false)
     }
 
   return (
@@ -196,7 +201,7 @@ const Form = ({changeShow}) => {
 
             {/*Boton*/}
             <div className="flex justify-end">
-                <ButtomInput value="Guardar"/>
+                <ButtomInput value={id ? "Guardar Cambios" : "Agregar Canasta   "}/>
             </div>
         </form>
       </div>
