@@ -1,8 +1,10 @@
 import { useState, useEffect, createContext } from "react";
 import axiosCustomer from "../config/axios";
+import useAuth from "../hooks/useAuth";
 
 const CestinoContext = createContext();
 export const CestinoProvider = ({ children }) => {
+  const { auth } = useAuth()
   const [cestini, setCestini] = useState([]);
   const [cestino, setCestino] = useState({})
   const [productEdit, setProductEdit] = useState({});    
@@ -29,7 +31,7 @@ export const CestinoProvider = ({ children }) => {
       }
     }
     getCestino()
-  }, []);
+  }, [auth]);
 
   async function saveCestino(cestino) {
     const token = localStorage.getItem("token");

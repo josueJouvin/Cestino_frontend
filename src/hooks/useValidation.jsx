@@ -34,10 +34,9 @@ const useValidation = () =>{
       return true
     }
 
-    function validatePassword() {
+    function validatePassword(password) {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+\\/.-])[A-Za-z\d@$!%*?&+\\/.-]{8,}$/;
-      if (!passwordRegex.test(formData.password)) {
-
+      if (!passwordRegex.test(password ? password : formData.password)) {
         return setAlert({ msg: `La contraseña debe cumplir con los siguientes requisitos:\n
         • Minimo 8 Caracteres
         • Al menos una letra mayúscula

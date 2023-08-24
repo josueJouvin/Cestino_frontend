@@ -2,17 +2,14 @@ import { useState, useEffect } from "react";
 import { Check, Close} from "./Icons";
 import { generateId } from "../helpers/generateId";
 
+import alertToast from "../utilities/alertToast";
 import ButtomInput from "./ButtomInput";
 import ListProducts from "./ListProducts";
-import useValidation from "../hooks/useValidation";
-import Alert from "./Alert";
 import useProductCalculations from "../hooks/useProductCalculations";
 import useCestino from "../hooks/useCestino";
-import { toast } from "react-toastify";
 
 const Form = ({changeShow}) => {
     const { percentage, profit, setPercentage, subTotal, total } = useProductCalculations()
-    const { alert, setAlert } = useValidation()
     const { saveCestino, cestino, editMode, setEditMode, products, setProducts} = useCestino()
     const [name, setName] = useState("")
     const [id, setId] = useState(null)
@@ -32,25 +29,17 @@ const Form = ({changeShow}) => {
         }
     },[cestino, editMode])
 
-    if(alert.error){    
-        setTimeout(() => {
-          setAlert({});
-        }, 3500);
-    }
-  
     function handleChangeProducts(e){
         const {name, value} = e.target;
-        setFormProducts(prevState => ({
-            ...prevState, [name]: value
-        }))
+        setFormProducts({...formProducts, [name]: value})
     }   
 
     function addProduct(e){
         e.preventDefault()
         const {nameproduct, price, quantity, unitmeasure} = formProducts
 
-        if([nameproduct,price,quantity,unitmeasure].includes("")){
-            setAlert({ msg: "el producto no debe tener campos vacios", error: true });
+        if([nameproduct.trim(),price,quantity,unitmeasure].includes("")){
+            alertToast({tipe: "error", msg: "El producto no debe tener campos vacios"})
             return
         }
         
@@ -69,27 +58,16 @@ const Form = ({changeShow}) => {
     async function handleSubmit(e) {    
         e.preventDefault()
         if(name.trim() === ""){
-            setAlert({ msg: "El nombre de la canasta no puede estar vació", error: true });
+            alertToast({tipe: "error", msg: "El nombre de la canasta no puede estar vació"})
             return
         }
         if(!products.length){
-            setAlert({ msg: "debe haber al menos 1 producto", error: true });
+            alertToast({tipe: "warning", msg: "Se requiere al menos 1 producto."})
             return
         }
 
-        toast.success(id ? "Modificado correctamente" : "Agregado correctamente", {
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-
+        alertToast({tipe: "success", msg: id ? "Modificado correctamente" : "Agregado correctamente"})
         saveCestino({name, products, subTotal, percentage, profit, total, id})
-        setAlert({})
         setProducts([])
         setName("")
         setEditMode(false)
@@ -115,7 +93,6 @@ const Form = ({changeShow}) => {
             </section>
 
             <div className="mb-4">
-                { alert.msg && <Alert alert={alert}/>}
                 <label htmlFor="image" className="inline-block text-gray-800 font-bold mb-2">Imagen de Canasta</label>
                 <input type="file" id="image" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500"/>
             </div>
@@ -167,13 +144,13 @@ const Form = ({changeShow}) => {
             {/*lista de productos*/}          
             {products.length ?  
                 <ul className="mb-4 w-full flex flex-col bg-white border-b-2 px-3 py-3 rounded-md">
-                    <li className="flex items-center border-b-2 py-2 group">
+                    <div className="flex items-center border-b-2 py-2 group">
                         <p className="w-full font-bold">Productos</p>
                         <div className="flex item-center justify-between gap-6 lg:gap-8 mr-14 md:mr-[65px]">
                             <span className="font-bold">Cantidad</span>
                             <span className="font-bold">Precio</span>
                         </div>
-                    </li>
+                    </div>
                     {products.map(product => (
                      <ListProducts key={product.id ? product.id : product._id} product={product} setFormProducts={setFormProducts}/>
                     ))}
@@ -187,7 +164,7 @@ const Form = ({changeShow}) => {
                 </div>
                 <div className="flex justify-start gap-4 border-b-2 border-black pb-1">
                     <label htmlFor="porcentaje">Porcentaje de Ganancia:</label>
-                    <input type="number" id="porcentaje" name="porcentaje" className="w-12" placeholder="%" min="0" value={percentage} onChange={e => setPercentage(e.target.value)}/>
+                    <input type="number" id="porcentaje" name="porcentaje" className="w-12" placeholder="%" min="0" value={percentage || ""} onChange={e => setPercentage(e.target.value)}/>
                 </div>
                 <div className="flex justify-start gap-4">
                     <span>Ganancia de canasta:</span>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const PasswordInput = ({setPassword, password}) => {
+const PasswordInput = ({setPassword, password, newP}) => {
   const [show, setShow] = useState(false)
 
   function handleClick(){
@@ -10,18 +10,18 @@ const PasswordInput = ({setPassword, password}) => {
   return (
     <div className="my-5 relative">
       <label
-        htmlFor="password"
-        className="uppercase text-gray-700 block text-xl font-bold"
+        htmlFor={newP ? "pwd_new": "password"}
+        className={newP ? "uppercase font-bold text-gray-800 text-lg" : "uppercase text-gray-700 block text-xl font-bold"}
       >
-        Contraseña
+        {newP ? "Contraseña Nueva" : "Contraseña"}
       </label>
       <div className="flex justify-between items-center">
       <input
-        id="password"
-        name="password"
+        id={newP ? "pwd_new": "password"}
+        name={newP ? "pwd_new": "password"}
         type={show ? "text" : "password"}
         placeholder="password"
-        className="border w-full p-3 mt-3 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500"
+        className={newP ? "border bg-gray-100 w-full p-2 mt-5 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500" : " border w-full p-3 mt-3 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500"}
         value={password}
         onChange={setPassword}
       />

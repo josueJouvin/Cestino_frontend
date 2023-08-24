@@ -13,7 +13,7 @@ const AdminLayout = () => {
   return (
     <>
         <div className="lg:flex lg:min-h-screen">
-          <ToastContainer />
+          <ToastContainer limit={3} />
           <button
             onClick={changeShow}
             className="fixed right-[10%] bottom-[6%] md:right-[12%] md:bottom-[8%] bg-lime-600 cursor-pointer p-2 rounded-full z-10 lg:hidden"

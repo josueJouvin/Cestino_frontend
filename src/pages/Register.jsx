@@ -18,12 +18,6 @@ const Register = () => {
   async function handleSubmit(e){
     e.preventDefault() 
 
-    if(alert){
-      setTimeout(() => {
-        setAlert({});
-      }, 3500);
-    }
-
     if([name.trim(),email.trim(),password.trim(),repeatPassword.trim()].includes("")){
       setAlert({msg: "existen campos vacios", error: true})
       return

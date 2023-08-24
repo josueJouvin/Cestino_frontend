@@ -8,6 +8,8 @@ import ForgetPassword from "./pages/ForgetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount";
 import NewPassword from "./pages/NewPassword";
 import ManageProducts from "./pages/ManageProducts";
+import EditProfile from "./pages/EditProfile";
+import ChangePassword from "./pages/ChangePassword";
 
 import { AuthProvider } from "./context/AuthProvider";
 import { CestinoProvider } from "./context/CestinoProvider";
@@ -28,6 +30,8 @@ function App() {
 
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<ManageProducts />} />
+              <Route path="perfil" element={<EditProfile/>}/>
+              <Route path="cambiar-password" element={<ChangePassword/>}/>
             </Route>
           </Routes>
         </CestinoProvider>  
