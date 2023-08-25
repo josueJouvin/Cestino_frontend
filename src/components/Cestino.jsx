@@ -1,18 +1,21 @@
-import { Check } from "./Icons";
 import useCestino from "../hooks/useCestino";
 import useSwitch from "../hooks/useSwitch";
 import Form from "./Form";
+import { useLocation } from "react-router-dom";
+import ProductsCestino from "./ProductsCestino";
 
 const Cestino = ({ cestino }) => {
   const {setEdit, setEditMode, deletedCestino} = useCestino()
   const {show, changeShow} = useSwitch()
   const { name, profit, total, products} = cestino;
+  const location = useLocation()
 
   function handleEdit() {
     setEdit(cestino) 
     changeShow()
     setEditMode(true)
   }
+  
   return (
     <>
     {show && <Form changeShow={changeShow}/>}
@@ -26,15 +29,7 @@ const Cestino = ({ cestino }) => {
         <ul className="list-decimal">
           <p className="text-lg font-bold mb-2">Productos:</p>
           {products.slice(0,4).map((product) => (
-            <li key={product._id} className="flex justify-between items-center gap-5 text-lg mb-2">
-              <p className="font-semibold flex gap-2 items-center text-black">
-                <span className="rounded-full p-[2px] bg-lime-500">
-                  <Check />
-                </span>
-                {product.nameproduct}
-              </p>
-              <p className="text-black">{product.quantity} {product.unitmeasure}</p>           
-            </li>
+            <ProductsCestino key={product._id} product={product}/>
           ))}
           {products.length > 4 && <p className="text-black font-semibold">Otros Productos...</p>}
         </ul>
@@ -46,15 +41,13 @@ const Cestino = ({ cestino }) => {
       <section className="p-6 pt-0 flex justify-between">
         <button
           onClick={handleEdit}
-          data-ripple-light="true"
           type="button"
           className="rounded-lg bg-blue-600 py-3 px-5 text-center text-sm font-bold uppercase text-white hover:bg-blue-700 shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]"
         >
-          Editar
+          { location.pathname === "/admin/canastas" ? "Ver Canasta" : "editar" }
         </button>
         <button
           onClick={() => deletedCestino(cestino._id)}
-          data-ripple-light="true"
           type="button"
           className="rounded-lg bg-red-600 py-3 px-5 text-center text-sm font-bold uppercase text-white hover:bg-red-700 shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]"
         >

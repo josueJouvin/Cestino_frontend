@@ -66,12 +66,13 @@ const Form = ({changeShow}) => {
             return
         }
 
-        alertToast({tipe: "success", msg: id ? "Modificado correctamente" : "Agregado correctamente"})
-        saveCestino({name, products, subTotal, percentage, profit, total, id})
-        setProducts([])
-        setName("")
-        setEditMode(false)
-        changeShow()
+        const results = await saveCestino({name, products, subTotal, percentage, profit, total, id})
+        if(!results.error){
+            setProducts([])
+            setName("")
+            setEditMode(false)
+            changeShow()           
+        }
     }
 
     function closeForm() {
@@ -178,7 +179,7 @@ const Form = ({changeShow}) => {
 
             {/*Boton*/}
             <div className="flex justify-end">
-                <ButtomInput value={id ? "Guardar Cambios" : "Agregar Canasta   "}/>
+                <ButtomInput value={id ? "Guardar Edicion" : "Agregar Canasta"}/>
             </div>
         </form>
       </div>

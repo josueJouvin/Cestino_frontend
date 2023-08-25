@@ -7,9 +7,10 @@ import Register from "./pages/Register";
 import ForgetPassword from "./pages/ForgetPassword";
 import ConfirmAccount from "./pages/ConfirmAccount";
 import NewPassword from "./pages/NewPassword";
-import ManageProducts from "./pages/ManageProducts";
+import ManageCestini from "./pages/ManageCestini";
 import EditProfile from "./pages/EditProfile";
 import ChangePassword from "./pages/ChangePassword";
+
 
 import { AuthProvider } from "./context/AuthProvider";
 import { CestinoProvider } from "./context/CestinoProvider";
@@ -29,9 +30,11 @@ function App() {
             </Route>
 
             <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<ManageProducts />} />
+              <Route index element={<ManageCestini />} />
               <Route path="perfil" element={<EditProfile/>}/>
               <Route path="cambiar-password" element={<ChangePassword/>}/>
+              <Route path="canastas" element={<ManageCestini />}/>
+
             </Route>
           </Routes>
         </CestinoProvider>  

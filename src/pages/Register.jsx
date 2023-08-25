@@ -39,7 +39,7 @@ const Register = () => {
       setAlert({ msg: "Todos los campos son obligatorios", error: true });
       setTimeout(() => {
         setAlert({});
-      }, 3000);
+      }, 3500);
       return;
     }
 
@@ -51,8 +51,8 @@ const Register = () => {
       sendEmailRef.current = error.response.data.emailR
       setAlert({msg: error.response.data.msg, error: true})
       captchaRef.current.reset();
+    }
   }
-}
 
   return (
     <>

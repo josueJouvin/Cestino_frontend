@@ -58,9 +58,7 @@ export default function Login() {
 
     try {
       const { data } = await axiosCustomer.post("/vendedor/login", {
-        email,
-        password,
-        captcha: captchaRef.current.getValue(),
+        email, password, captcha: captchaRef.current.getValue(),
       });
       setPasswordValid("");
       localStorage.setItem("token", data.token);

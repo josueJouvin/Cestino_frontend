@@ -22,7 +22,7 @@ const AdminLayout = () => {
           </button>
           <NavMenu show={show} changeShow={changeShow} />
           {auth?._id ? (
-            <main className="flex items-center justify-center lg:w-4/5">
+            <main className="flex items-center justify-center lg:w-4/5 overscroll-x-none">
               <Outlet />
             </main>
           ) : (
