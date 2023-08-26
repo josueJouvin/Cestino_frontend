@@ -271,7 +271,7 @@ function Close() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="icon icon-tabler icon-tabler-x md:w-8 md:h-8 hover:cursor-pointer hover:scale-150 transition duration-300 ease-in-out"
+      className="icon icon-tabler icon-tabler-x md:w-8 md:h-8 hover:cursor-pointer hover:scale-150 transition duration-300 ease-in-out dark:stroke-white"
       width="26"
       height="26"
       viewBox="0 0 24 24"

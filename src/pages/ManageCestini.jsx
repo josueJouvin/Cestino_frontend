@@ -17,7 +17,7 @@ const ManageCestini = () => {
       <section className={`flex flex-col justify-center items-center my-7 container mx-auto overscroll-x-none md:mt-12 ${location.pathname === "/admin" ? "2xl:my-0": ""}`}>
         {cestini.length ? (
           <>
-            <h1 className="text-3xl lg:text-4xl text-lime-900 font-bold 2xl:mb-10 text-center">{location.pathname === "/admin" ? "Ultimas canastas agregadas" : "Todas tus canastas"}</h1>
+            <h1 className="text-3xl lg:text-4xl text-lime-900 dark:text-slate-200 font-bold 2xl:mb-10 text-center">{location.pathname === "/admin" ? "Ultimas canastas agregadas" : "Todas tus canastas"}</h1>
             <GridCestini>
               {itemsToRender.map((cestino) => ( 
                 <Cestino key={cestino._id} cestino={cestino}/>

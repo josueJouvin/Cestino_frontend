@@ -19,9 +19,9 @@ const Cestino = ({ cestino }) => {
   return (
     <>
     {show && <Form changeShow={changeShow}/>}
-    <div className="flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg mt-14 2xl:mt-5 ">
-      <div className="mx-14 md:mx-20  -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-lime-500 to-lime-600"></div>
-      <section className="flex justify-between  h-full flex-col">
+    <div className="flex flex-col rounded-xl bg-white dark:bg-slate-200/95 bg-clip-border text-gray-700 shadow-lg mt-14 2xl:mt-5 ">
+      <div className="mx-14 md:mx-20 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-lime-500 to-lime-600"></div>
+      <section className="flex justify-between h-full flex-col">
       <div className="p-6">
         <h5 className="mt-2 mb-5 text-center text-2xl font-bold text-blue-gray-900 text-black antialiased">
           {name}
@@ -33,7 +33,7 @@ const Cestino = ({ cestino }) => {
           ))}
           {products.length > 4 && <p className="text-black font-semibold">Otros Productos...</p>}
         </ul>
-        <section className="border-t-2 border-gray-400 flex flex-col gap-2 mt-5 items-end font-semibold text-black text-lg">
+        <section className="border-t-2 border-gray-400 dark:border-gray-900 flex flex-col gap-2 mt-5 items-end font-semibold text-black text-lg">
           <span className="mt-2">Ganancia: ${profit ? profit : 0}</span>
           <span>Precio de Canasta: ${Number(total).toFixed(2)}</span>
         </section>

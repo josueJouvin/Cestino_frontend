@@ -36,7 +36,7 @@ useEffect(()=>{
   }
 
   return (
-    <li className="flex border-b-2 py-2 group">
+    <li className="flex border-b-2 dark:border-b-slate-400 py-2 group">
       <p className="w-full font-medium">{nameproduct}</p>
       <div className="flex items-center justify-between gap-5 md:gap-8 lg:gap-9">
         <p className="whitespace-nowrap tracking-wide">{`${quantity} ${unitmeasure}`}</p>
