@@ -28,7 +28,7 @@ const ManageCestini = () => {
         ) : (
           <>
             <img className="w-64 block" src="/Logo.svg" />
-            <h4 className="text-3xl text-lime-900 px-5">
+            <h4 className="text-3xl text-lime-900 px-5 dark:text-slate-200">
               Aún no tienes Canastas creadas, comienza creando uno.
             </h4>
           </>

@@ -45,7 +45,7 @@ export const CestinoProvider = ({ children }) => {
 
     if(cestino.id){
       try {
-        const { data } = await axiosCustomer.put(`/producto/${cestino.id}`,cestino,config)
+        const { data } = await axiosCustomer.put(`/producto/${cestino.id}`, cestino, config)
         const updatedCestino = cestini.map(cestinoState => cestinoState._id === data._id ? data : cestinoState)
         setCestini(updatedCestino)
         alertToast({tipe: "success", msg: "Modificado Correctamente"})
@@ -104,7 +104,7 @@ export const CestinoProvider = ({ children }) => {
   }
   
   return (
-    <CestinoContext.Provider value={{ cestini, saveCestino, setEdit, cestino, editMode, setEditMode, products, setProducts, productEdit,setProductEdit, deletedCestino }}>
+    <CestinoContext.Provider value={{ cestini, saveCestino, setEdit, cestino, setCestino ,editMode, setEditMode, products, setProducts, productEdit,setProductEdit, deletedCestino }}>
       {children}
     </CestinoContext.Provider>
   );
