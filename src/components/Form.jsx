@@ -10,7 +10,7 @@ import useCestino from "../hooks/useCestino";
 
 const Form = ({changeShow}) => {
     const { percentage, profit, setPercentage, subTotal, total } = useProductCalculations()
-    const { saveCestino, cestino, editMode, setEditMode, products, setProducts, setProductEdit, setCestino} = useCestino()
+    const { saveCestino, cestino, editMode, setEditMode, products, setProducts} = useCestino()
     const [name, setName] = useState("")
     const [id, setId] = useState(null)
     const [formProducts, setFormProducts] = useState({
@@ -53,8 +53,6 @@ const Form = ({changeShow}) => {
             }
             setProducts(prevProducts => [...prevProducts, newProduct]);       
         }   
-
-        setProductEdit({})
     }
 
     async function handleSubmit(e) {    
@@ -67,16 +65,14 @@ const Form = ({changeShow}) => {
             alertToast({tipe: "warning", msg: "Se requiere al menos 1 producto."})
             return
         }
+        const sinId = products.map(({ id, ...prod }) => prod);
 
-        const productsWithoutId = products.map(({ id, ...prod }) => prod);
-        const results = await saveCestino({name, products: productsWithoutId, subTotal, percentage, profit, total, id})
+        const results = await saveCestino({name, products: sinId, subTotal, percentage, profit, total, id})
         if(!results.error){
             setProducts([])
             setName("")
             setEditMode(false)
-            changeShow()        
-            setCestino({})   
-            setProducts([])
+            changeShow()           
         }
     }
 
@@ -84,7 +80,6 @@ const Form = ({changeShow}) => {
         setEditMode(false)
         setProducts([])
         changeShow()
-        setCestino({})
     }
 
   return (

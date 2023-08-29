@@ -10,7 +10,7 @@ const Cestino = ({ cestino }) => {
   const { name, profit, total, products} = cestino;
   const location = useLocation()
 
-  function handleEdit() {
+  function handleEdit(cestino) {
     setEdit(cestino) 
     changeShow()
     setEditMode(true)
@@ -40,7 +40,7 @@ const Cestino = ({ cestino }) => {
       </div>
       <section className="p-6 pt-0 flex justify-between">
         <button
-          onClick={handleEdit}
+          onClick={() => handleEdit(cestino)}
           type="button"
           className="rounded-lg bg-blue-600 py-3 px-5 text-center text-sm font-bold uppercase text-white hover:bg-blue-700 shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]"
         >

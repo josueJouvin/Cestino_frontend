@@ -10,7 +10,6 @@ const ManageCestini = () => {
   const {show, changeShow} = useSwitch()
   const { cestini } = useCestino()
   const itemsToRender = location.pathname === "/admin/canastas" ? cestini  : cestini.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3)
-  
   return (
     <>
       {show && <Form changeShow={changeShow}/>}
