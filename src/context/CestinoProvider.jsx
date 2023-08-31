@@ -37,14 +37,27 @@ export const CestinoProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     const config = {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
-        };
+    };
+
+    console.log(cestino)
+    const formData = new FormData();
+    formData.append("image", cestino.image);
+
+    const jsonData = {
+      name: cestino.name,
+      products: cestino.products,
+      subTotal: cestino.subTotal,
+      profit: cestino.profit,
+      total: cestino.total
+     };
+    formData.append("jsonData", JSON.stringify(jsonData));
 
     if(cestino.id || cestino._id){
       try {
-        const { data } = await axiosCustomer.put(`/producto/${cestino.id}`,cestino,config)
+        const { data } = await axiosCustomer.put(`/producto/${cestino.id}`, formData, config)
         const updatedCestino = cestini.map(cestinoState => cestinoState._id === data._id ? data : cestinoState)
         setCestini(updatedCestino)
         alertToast({tipe: "success", msg: "Modificado Correctamente"})
@@ -59,7 +72,7 @@ export const CestinoProvider = ({ children }) => {
       }
     }else{
       try {
-        const { data } = await axiosCustomer.post("/producto", cestino, config);
+        const { data } = await axiosCustomer.post("/producto", formData, config);
         const { createdAt, updatedAt, __v, ...cestinoStored } = data;
         setCestini([cestinoStored, ...cestini]);
         alertToast({tipe: "success", msg: "Agregado correctamente"})

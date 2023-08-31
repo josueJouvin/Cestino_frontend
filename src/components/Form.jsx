@@ -13,21 +13,24 @@ const Form = ({changeShow}) => {
     const { saveCestino, cestino, editMode, setEditMode, products, setProducts} = useCestino()
     const [name, setName] = useState("")
     const [id, setId] = useState(null)
+    const [preImage, setPreImage] = useState(null)
+    const [image, setImage] = useState(null)
     const [formProducts, setFormProducts] = useState({
         nameproduct: "",
         quantity: "",
         unitmeasure: "",
         price: ""
     })
-    
+
     useEffect(()=>{
         if(cestino?.name && editMode){
+            setImage(cestino.image?.secure_url)
             setName(cestino.name)
             setProducts(cestino.products)
             setPercentage(cestino.percentage)
             setId(cestino._id)
         }
-    },[cestino, editMode])
+    },[cestino])
 
     function handleChangeProducts(e){
         const {name, value} = e.target;
@@ -65,9 +68,8 @@ const Form = ({changeShow}) => {
             alertToast({tipe: "warning", msg: "Se requiere al menos 1 producto."})
             return
         }
-        const sinId = products.map(({ id, ...prod }) => prod);
 
-        const results = await saveCestino({name, products: sinId, subTotal, percentage, profit, total, id})
+        const results = await saveCestino({name, products, subTotal, percentage, profit, total, id, image})
         if(!results.error){
             setProducts([])
             setName("")
@@ -82,11 +84,31 @@ const Form = ({changeShow}) => {
         changeShow()
     }
 
+    function handleImageUpload(e){
+        const file = e.target.files[0];
+        if(!file.type.startsWith('image/')){
+          alertToast({tipe:"error", msg:"El archivo no es el correcto"})
+          return;
+        }
+        setImage(file)
+    
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreImage(reader.result)
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    function deletedImage(e){
+        e.preventDefault()
+        setImage(null)
+        setPreImage(null)
+    }
+
   return (
     <section className="absolute inset-0">
       <div className="inset-0 fixed grid place-items-center bg-gray-800/80 overflow-y-auto z-50">
         <form onSubmit={handleSubmit} noValidate className="bg-slate-200 dark:bg-zinc-900 md:w-3/4 xl:w-3/5 2xl:w-1/2 p-7 mx-auto rounded-xl ">
-
             <section className="flex justify-between items-center mb-4">
                 <span className="font-bold text-2xl text-lime-600 dark:text-lime-600">CESTINO</span>
                 <button onClick={closeForm}>
@@ -94,9 +116,13 @@ const Form = ({changeShow}) => {
                 </button>
             </section>
 
-            <div className="mb-4 dark:text-slate-300 text-gray-800 font-bold">
-                <label htmlFor="image" className="inline-block mb-2">Imagen de Canasta</label>
-                <input type="file" id="image" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500"/>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-4 dark:text-slate-300 text-gray-800 font-bold">
+                <img className="w-32 h-32 shadow-md rounded-full object-cover relative" alt="Imagen canasta" src={preImage ? preImage : image}/>
+                <button onClick={deletedImage}>X</button>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="image" className="inline-block mb-2">Imagen de Canasta</label>
+                    <input type="file" id="image" name="image" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-lime-500" accept="image/*" onChange={handleImageUpload}/>
+               </div>
             </div>
 
             { /*input de canasta*/}
@@ -156,7 +182,7 @@ const Form = ({changeShow}) => {
                     {products.map(product => (
                      <ListProducts key={product.id ? product.id : product._id} product={product} setFormProducts={setFormProducts}/>
                     ))}
-                </ul> : <p className="text-center font-semibold my-2 text-lg">Aún no tienes productos ingresados</p>}
+                </ul> : <p className="text-center dark:text-slate-200 font-semibold my-2 text-lg">Aún no tienes productos ingresados</p>}
             
             {/*sumatoria, total*/}
             <section className="mt-3 flex flex-col items-end w-full gap-1 md:text-lg">

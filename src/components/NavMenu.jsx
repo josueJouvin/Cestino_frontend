@@ -18,7 +18,7 @@ const NavMenu = ({ changeShow, show }) => {
   const { logOut, auth } = useAuth();
   const {handleClick, isDarkMode} = useDarkMode()
   return (
-    <aside className="bg-lime-600 dark:bg-lime-700 px-5 flex flex-col text-white font-semibold md:text-xl lg:w-1/5">
+    <aside className="bg-lime-600 dark:bg-lime-700 px-5 flex flex-col text-white font-semibold md:text-xl lg:w-1/5 lg:fixed lg:h-full">
       <Header />
       <section
         className={`fixed z-10 bottom-0 right-0 bg-lime-600 dark:bg-lime-700 w-1/2 p-2 rounded-tl-lg border-t-2 border-l-2 border-lime-700 dark:border-green-500 lg:h-full lg:static lg:z-0 lg:border-0 lg:w-full lg:p-0 lg:rounded-none lg:border-none ${!show && "hidden lg:block"}`}
@@ -34,16 +34,6 @@ const NavMenu = ({ changeShow, show }) => {
               }
             >
               <Products /> Canastas
-            </NavLink>
-            <NavLink
-              to="/admin/clientes"
-              className={({ isActive }) =>
-              `flex gap-2 items-center px-2 py-3 rounded-md hover:bg-lime-700 dark:hover:bg-lime-600 transition-color ${
-                isActive ? "bg-lime-700 dark:bg-lime-600" : ""
-              }`
-            }
-            >
-              <Customers /> Clientes
             </NavLink>
             <NavLink
               to="/admin/perfil"
