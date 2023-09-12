@@ -1,0 +1,6 @@
+  .card-btn:hover svg{
+    stroke: #84cc16;
+  }
+  .card-btn svg{
+    stroke-width: 3.5px;
+  }

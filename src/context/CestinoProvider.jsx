@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useRef } from "react";
 import axiosCustomer from "../config/axios";
 import useAuth from "../hooks/useAuth";
 import alertToast from "../utilities/alertToast";
@@ -11,7 +11,8 @@ export const CestinoProvider = ({ children }) => {
   const [productEdit, setProductEdit] = useState({});    
   const [products, setProducts] = useState([]);    
   const [editMode, setEditMode]= useState(false)
-
+  const nameBack = useRef("")
+  
   useEffect(() => {
    async function getCestino() {
       try {
@@ -31,7 +32,7 @@ export const CestinoProvider = ({ children }) => {
       }
     }
     getCestino()
-  }, [auth, cestini.length]);
+  }, [auth]);
 
   async function saveCestino(cestino) {
     const token = localStorage.getItem("token");
@@ -42,7 +43,6 @@ export const CestinoProvider = ({ children }) => {
           },
     };
 
-    console.log(cestino)
     const formData = new FormData();
     formData.append("image", cestino.image);
 
@@ -50,6 +50,7 @@ export const CestinoProvider = ({ children }) => {
       name: cestino.name,
       products: cestino.products,
       subTotal: cestino.subTotal,
+      percentage: cestino.percentage,
       profit: cestino.profit,
       total: cestino.total
      };
@@ -61,10 +62,12 @@ export const CestinoProvider = ({ children }) => {
         const updatedCestino = cestini.map(cestinoState => cestinoState._id === data._id ? data : cestinoState)
         setCestini(updatedCestino)
         alertToast({tipe: "success", msg: "Modificado Correctamente"})
+        nameBack.current = ""
         return{
           error:false
         }
       } catch (error) {
+        nameBack.current = error.response.data.name
         alertToast({tipe: "error", msg: error.response.data.msg})
         return{
           error: true
@@ -76,10 +79,12 @@ export const CestinoProvider = ({ children }) => {
         const { createdAt, updatedAt, __v, ...cestinoStored } = data;
         setCestini([cestinoStored, ...cestini]);
         alertToast({tipe: "success", msg: "Agregado correctamente"})
+        nameBack.current = ""
         return{
           error:false
         }
       } catch (error) {
+        nameBack.current = error.response.data.name
         alertToast({tipe: "error", msg: error.response.data.msg})
         return{
           error: true
@@ -116,7 +121,7 @@ export const CestinoProvider = ({ children }) => {
   }
   
   return (
-    <CestinoContext.Provider value={{ cestini, saveCestino, setEdit, cestino, editMode, setEditMode, products, setProducts, productEdit,setProductEdit, deletedCestino }}>
+    <CestinoContext.Provider value={{ cestini, saveCestino, setEdit, cestino, editMode, setEditMode, products, setProducts, productEdit,setProductEdit, deletedCestino, nameBack }}>
       {children}
     </CestinoContext.Provider>
   );

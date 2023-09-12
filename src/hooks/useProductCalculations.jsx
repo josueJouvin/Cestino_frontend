@@ -33,12 +33,14 @@ const useProductCalculations = () => {
     },[percentage, subTotal, profit])
 
   return {
-    subTotal,
     total,
     percentage,
     profit,
+    subTotal,
     setPercentage
   }
 }
 
 export default useProductCalculations
+
+

@@ -3,6 +3,7 @@ import ButtomInput from "../components/ButtomInput";
 import useAuth from "../hooks/useAuth";
 import alertToast from "../utilities/alertToast";
 import { Link } from "react-router-dom";
+import Titles from "../components/Titles";
 
 const EditProfile = () => {
   const { auth, updateProfile } = useAuth();
@@ -40,13 +41,11 @@ const EditProfile = () => {
   }
 
   return (
-    <section className=" flex flex-col gap-10 w-full px-5 md:px-0">
-      <h2 className="font-black text-3xl text-lime-800 text-center mt-10 lg:mt-0">
-        Editar Perfil
-      </h2>
+    <section className=" flex flex-col w-full px-5 md:px-0">
+      <Titles text="Editar Perfil"/>
 
       <section className="flex justify-center">
-        <div className="w-full md:w-1/2 bg-white shadow rounded-lg p-5">
+        <div className="w-full md:w-1/2 bg-white dark:bg-slate-200/95 rounded-lg p-5 shadow-card dark:shadow-cardD border-2 border-gray-800">
           <form onSubmit={handelSubmit}>
             <div className="my-3">
               <label htmlFor="name" className="uppercase font-bold text-gray-800">

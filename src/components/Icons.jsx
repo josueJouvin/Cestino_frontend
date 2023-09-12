@@ -247,16 +247,16 @@ function TrashIcon() {
   );
 }
 
-function Check() {
+function Check({isCestinoSelected}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="icon icon-tabler icon-tabler-check"
+      className="icon icon-tabler icon-tabler-check transition-all duration-300 hover:text-lime-600"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      strokeWidth="2.5"
-      stroke="currentColor"
+      strokeWidth="3"
+      stroke={isCestinoSelected ? " #84cc16" : "currentColor"}
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"

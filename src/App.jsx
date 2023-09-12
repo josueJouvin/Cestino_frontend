@@ -10,9 +10,11 @@ import NewPassword from "./pages/NewPassword";
 import ManageCestini from "./pages/ManageCestini";
 import EditProfile from "./pages/EditProfile";
 import ChangePassword from "./pages/ChangePassword";
+import ExportPdf from "./pages/ExportPdf";
 
 import { AuthProvider } from "./context/AuthProvider";
 import { CestinoProvider } from "./context/CestinoProvider";
+//import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
   return (
@@ -30,13 +32,13 @@ function App() {
 
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<ManageCestini />} />
-              <Route path="canastas" element={<ManageCestini />}/>
-              <Route path="perfil" element={<EditProfile/>}/>
-              <Route path="cambiar-password" element={<ChangePassword/>}/>
-
+              <Route path="canastas" element={<ManageCestini />} />
+              <Route path="perfil" element={<EditProfile />} />
+              <Route path="cambiar-password" element={<ChangePassword />} />
+              <Route path="exportar-pdf" element={<ExportPdf/>}/>
             </Route>
           </Routes>
-        </CestinoProvider>  
+        </CestinoProvider>
       </AuthProvider>
     </BrowserRouter>
   );

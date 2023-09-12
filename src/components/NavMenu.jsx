@@ -1,7 +1,6 @@
 import Header from "./Header";
 import {
   Products,
-  Customers,
   User,
   ExportPDF,
   LogOut,
@@ -18,12 +17,12 @@ const NavMenu = ({ changeShow, show }) => {
   const { logOut, auth } = useAuth();
   const {handleClick, isDarkMode} = useDarkMode()
   return (
-    <aside className="bg-lime-600 dark:bg-lime-700 px-5 flex flex-col text-white font-semibold md:text-xl lg:w-1/5 lg:fixed lg:h-full">
+    <aside className="bg-lime-600 dark:bg-lime-700 px-5 flex flex-col text-white font-semibold lg:text-2xl lg:w-1/5 lg:fixed lg:h-full">
       <Header />
       <section
         className={`fixed z-10 bottom-0 right-0 bg-lime-600 dark:bg-lime-700 w-1/2 p-2 rounded-tl-lg border-t-2 border-l-2 border-lime-700 dark:border-green-500 lg:h-full lg:static lg:z-0 lg:border-0 lg:w-full lg:p-0 lg:rounded-none lg:border-none ${!show && "hidden lg:block"}`}
       >
-        <div className="lg:flex lg:flex-col lg:h-full lg:justify-between">
+        <div className="lg:flex lg:flex-col lg:h-full lg:justify-between ">
           <div className="flex flex-col gap-4 justify-center">
             <NavLink
               to="/admin/canastas"
@@ -46,7 +45,7 @@ const NavMenu = ({ changeShow, show }) => {
               <User /> Perfil
             </NavLink>
             <NavLink
-              to="/admin/exportar"
+              to="/admin/exportar-pdf"
               className={({ isActive }) =>
                 `flex gap-2 items-center px-2 py-3 rounded-md hover:bg-lime-700 dark:hover:bg-lime-600 transition-color ${
                   isActive ? "bg-lime-700 dark:bg-lime-600" : ""
@@ -59,6 +58,7 @@ const NavMenu = ({ changeShow, show }) => {
 
           <div className="border-t-2 border-lime-700 dark:border-lime-500 flex flex-col gap-3 justify-center w-full my-5 ">
             <button onClick={handleClick} className="flex gap-2 items-center px-2 py-3 rounded-md hover:bg-lime-700 transition-colors mt-2 dark:hover:bg-lime-600">
+              
             {isDarkMode ? <Night/> : <Day />} {isDarkMode ? 'Modo Oscuro' : 'Modo Claro'}
             </button>
             <button

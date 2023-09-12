@@ -9,7 +9,7 @@ const Cestino = ({ cestino }) => {
   const { show, changeShow } = useSwitch();
   const { name, profit, total, products } = cestino;
   const location = useLocation();
-
+  
   function handleEdit(cestino) {
     setEdit(cestino);
     changeShow();
@@ -19,28 +19,29 @@ const Cestino = ({ cestino }) => {
   return (
     <>
       {show && <Form changeShow={changeShow} />}
-      <div className="flex flex-col rounded-xl bg-white dark:bg-slate-200/95 bg-clip-border text-gray-700 shadow-lg mt-14 2xl:mt-5 ">
-        <div className="mx-14 lg:mx-20 -mt-6">
+      <div className="flex flex-col rounded-xl bg-white dark:bg-slate-200/95 bg-clip-border shadow-card dark:shadow-cardD border-2 border-solid border-gray-800 text-gray-700 mt-14 2xl:mt-5">
+        <div className="mx-14 lg:mx-20 -mt-8 transition-all duration-500 hover:-translate-y-3">
           <img
-            className="overflow-hidden w-full rounded-xl bg-clip-border shadow-lg h-56 bg-gradient-to-r from-lime-500 to-lime-600 object-cover"
-            src={cestino.image ? cestino.image.secure_url : "./Logo.svg"}
-        />
+            className="overflow-hidden rounded-xl bg-clip-border shadow-lg h-52 bg-gradient-to-r from-lime-500 to-lime-600 object-cover mx-auto block"
+            src={cestino.image ? cestino.image.secure_url : "/Logo.svg"}
+            alt={`canasta ${cestino.name}`}
+          />
         </div>
         <section className="flex justify-between h-full flex-col">
           <div className="p-6">
-            <h5 className="mt-2 mb-5 text-center text-2xl font-bold text-blue-gray-900 text-black antialiased">
+            <h4 className="mt-2 mb-5 text-center text-2xl font-bold text-blue-gray-900 text-black break-words">
               {name}
-            </h5>
+            </h4>
             <ul className="list-decimal">
-              <p className="text-lg font-bold mb-2">Productos:</p>
-              {products.slice(0, 4).map((product) => (
+              <p className="text-[19px] font-bold mb-2">Productos:</p>
+              {products.slice(0, 5).map((product) => (
                 <ProductsCestino key={product._id} product={product} />
               ))}
-              {products.length > 4 && (
+              {products.length > 5 && (
                 <p className="text-black font-semibold">Otros Productos...</p>
               )}
             </ul>
-            <section className="border-t-2 border-gray-400 dark:border-gray-900 flex flex-col gap-2 mt-5 items-end font-semibold text-black text-lg">
+            <section className="border-t-[3px] border-gray-800 dark:border-gray-900 flex flex-col gap-2 mt-5 items-end font-semibold text-black text-[19px]">
               <span className="mt-2">Ganancia: ${profit ? profit : 0}</span>
               <span>Precio de Canasta: ${Number(total).toFixed(2)}</span>
             </section>
