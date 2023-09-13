@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { PDFViewer } from "@react-pdf/renderer";
 import CestinoPdf from "../components/CestinoPdf";
 import GridCestini from "../components/GridCestini";
 import Titles from "../components/Titles";
 import useCestino from "../hooks/useCestino";
 import Pdf from "../components/Pdf";
-import { PDFViewer } from "@react-pdf/renderer";
+import useAuth from "../hooks/useAuth";
 
 const ExportPdf = () => {
+  const { auth } = useAuth()
   const { cestini } = useCestino();
   const [pdf, setPdf] = useState([]);
   const [active, setActive] = useState(false);
@@ -14,6 +16,7 @@ const ExportPdf = () => {
   function handleClick() {
     setActive(!active);
   }
+  
   return (
     <>
       {!active && (
@@ -43,7 +46,7 @@ const ExportPdf = () => {
 
       {active ? (
         <PDFViewer style={{ width: "100%", height: "100vh" }}>
-          <Pdf pdf={pdf} />
+          <Pdf pdf={pdf} auth={auth.companyName}/>
         </PDFViewer>
       ) : null}
 
