@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useKeyboard = (closeForm, handleSubmit) => {
+const useKeyboard = ({closeForm, handleSubmit}) => {
     useEffect(() => {
         const handleKeyPress = (e) => {
             

@@ -42,7 +42,7 @@ const Cestino = ({ cestino }) => {
               )}
             </ul>
             <section className="border-t-[3px] border-gray-800 dark:border-gray-900 flex flex-col gap-2 mt-5 items-end font-semibold text-black text-[19px]">
-              <span className="mt-2">Ganancia: ${profit ? profit : 0}</span>
+              <span className="mt-2">Ganancia: ${profit ? profit.toFixed(2) : 0}</span>
               <span>Precio de Canasta: ${Number(total).toFixed(2)}</span>
             </section>
           </div>

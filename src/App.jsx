@@ -11,10 +11,11 @@ import ManageCestini from "./pages/ManageCestini";
 import EditProfile from "./pages/EditProfile";
 import ChangePassword from "./pages/ChangePassword";
 import ExportPdf from "./pages/ExportPdf";
+import NotFound from "./pages/NotFound";
+import LandingPage from "./pages/LandingPage";
 
 import { AuthProvider } from "./context/AuthProvider";
 import { CestinoProvider } from "./context/CestinoProvider";
-//import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
       <AuthProvider>
         <CestinoProvider>
           <Routes>
-            <Route path="/" element={<AuthLayout />}>
+            <Route path="/" element={<LandingPage/>}/>
+            <Route path="/*" element={<NotFound/>}/>
+
+            <Route path="/auth" element={<AuthLayout />}>
               <Route index element={<Login />} />
               <Route path="registrar" element={<Register />} />
               <Route path="olvide-password" element={<ForgetPassword />} />
@@ -37,6 +41,7 @@ function App() {
               <Route path="cambiar-password" element={<ChangePassword />} />
               <Route path="exportar-pdf" element={<ExportPdf/>}/>
             </Route>
+
           </Routes>
         </CestinoProvider>
       </AuthProvider>

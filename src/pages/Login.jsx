@@ -75,7 +75,7 @@ export default function Login() {
 
   return (
     <>
-      <TextPublic text="Inicia Sesión y administra tus productos" />
+      <TextPublic text="Inicia Sesión y administra tus Canastas" />
 
       <div className="mt-12 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
         {alert.msg && <Alert alert={alert} />}

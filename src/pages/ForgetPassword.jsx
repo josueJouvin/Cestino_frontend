@@ -65,7 +65,7 @@ const ForgetPassword = () => {
 
   return (
     <>
-      <TextPublic text="Recupera tu Acceso y no Pierdas tus Productos" />
+      <TextPublic text="Recupera tu Acceso y no Pierdas tus Canastas" />
 
       <div className="mt-12 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
         {alert.msg && <Alert alert={alert} />}

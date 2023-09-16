@@ -21,8 +21,9 @@ const ExportPdf = () => {
     <>
       {!active && (
         <section className="flex flex-col justify-center items-center mt-8 mb-20 md:mb-8 container mx-auto overscroll-x-none">
-        <Titles text="Seleccione las canastas a exportar" />
         {cestini.length ? (
+          <>
+          <Titles text="Seleccione las canastas a exportar" />
           <GridCestini>
             {cestini.map((cestino) => (
               <CestinoPdf
@@ -33,11 +34,12 @@ const ExportPdf = () => {
               />
             ))}
           </GridCestini>
+          </>
         ) : (
           <>
             <img className="w-64 block" src="/Logo.svg" />
             <h4 className="text-3xl text-lime-900 px-5 dark:text-slate-200">
-              Aún no tienes Canastas creadas, comienza creando uno.
+              Aún no tienes Canastas para exportar, comienza creando uno.
             </h4>
           </>
         )}

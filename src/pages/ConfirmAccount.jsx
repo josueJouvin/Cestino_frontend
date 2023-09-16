@@ -8,12 +8,12 @@ const ConfirmAccount = () => {
   const {alert, confirmedAccount, loading} = useAccount()
   return (
     <>
-      <TextPublic text="Crea tu cuenta y administra tus productos"/>
+      <TextPublic text="Crea tu cuenta y administra tus Canastas"/>
 
       <div className="mt-12 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
         {!loading && <Alert alert={alert}/>}
         {confirmedAccount && (
-          <Link className="block text-center my-5 text-gray-600" to={"/"}>Iniciar Sesión</Link>
+          <Link className="block text-center my-5 text-gray-600" to={"/auth"}>Iniciar Sesión</Link>
         )}
       </div>
     </>

@@ -14,7 +14,7 @@ const Pdf = ({ pdf, auth }) => {
       width: "100%",
       flexDirection: "column",
       position: "relative", 
-      backgroundColor: "#c6ebcf9b"
+      backgroundColor: "#ccf0d59b"
     },
     container: {
       width: "80%",
@@ -124,8 +124,7 @@ const Pdf = ({ pdf, auth }) => {
                 <View style={styles.cestinoProducts}>
                   {cestino.products.map((product) => (
                     <Text key={product._id}>
-                      - {product.nameproduct} {product.quantity}{" "}
-                      {product.unitmeasure}
+                      - {product.nameproduct} {product.quantity} {product.unitmeasure}
                     </Text>
                   ))}
                 </View>
@@ -137,7 +136,7 @@ const Pdf = ({ pdf, auth }) => {
                 src={
                   cestino.image
                     ? webpToPng(cestino.image.secure_url)
-                    : "/Cestino.png"
+                    : "/Cestino.png"  
                 }
                 style={styles.imageBg}
               />

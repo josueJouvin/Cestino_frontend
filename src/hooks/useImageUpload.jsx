@@ -8,7 +8,7 @@ const useImageUpload = () => {
   function handleImageUpload(e){
     const file = e.target.files[0];
     if(!file.type.startsWith('image/')){
-      alertToast({tipe:"error", msg:"El archivo no es el correcto"})
+      alertToast({tipe:"error", msg:"El Archivo o Formato no es el correcto"})
       return;
     }
     setImage(file)
