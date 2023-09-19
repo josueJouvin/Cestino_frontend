@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Titles from "../components/Titles";
 
 const EditProfile = () => {
-  const { auth, updateProfile } = useAuth();
+  const { auth, updateProfile} = useAuth();
   const [profile, setProfile] = useState({});
 
   useEffect(() => {
@@ -22,21 +22,21 @@ const EditProfile = () => {
     const { name, email, phone } = profile;
 
     if ([name.trim(), email.trim()].includes("")) {
-      alertToast({ tipe: "error", msg: "Email y Nombre son obligatorios" });
+      alertToast({type: "error", msg: "Email y Nombre son obligatorios" });
       return;
     }
 
     if (phone) {
       if (isNaN(phone)) {
-        alertToast({ tipe: "warning", msg: "Debe ser un numero telefonico valido" });
+        alertToast({ type: "warning", msg: "Debe ser un numero telefonico valido" });
         return;
       }
     }
     const response = await updateProfile(profile);
     if(response.error){
-      alertToast({tipe: "error", msg: response.msg})
+      alertToast({type: "error", msg: response.msg})
     }else{
-      alertToast({tipe: "success", msg: response.msg})
+      alertToast({type: "success", msg: response.msg})
     }
   }
 

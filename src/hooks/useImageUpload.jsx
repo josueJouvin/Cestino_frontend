@@ -8,16 +8,20 @@ const useImageUpload = () => {
   function handleImageUpload(e){
     const file = e.target.files[0];
     if(!file.type.startsWith('image/')){
-      alertToast({tipe:"error", msg:"El Archivo o Formato no es el correcto"})
-      return;
+      return alertToast({type:"error", msg:"El Archivo o Formato no es el correcto"})
     }
-    setImage(file)
-
+    
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreImage(reader.result)
     };
     reader.readAsDataURL(file);
+
+    if (file.size > 10 * 1024 * 1024) {
+      return alertToast({type: "error", msg: "La imagen debe ser de menos de 10MB" });
+    }
+    
+    setImage(file)
   }
 
   function deletedImage(e){
@@ -30,3 +34,4 @@ const useImageUpload = () => {
 }
 
 export default useImageUpload
+

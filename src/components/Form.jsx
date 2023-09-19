@@ -10,10 +10,11 @@ import Modal from "./Modal";
 import ProductsForm from "./ProductsForm";
 import useKeyboard from "../hooks/useKeyboard";
 import FormSelect from "./FormSelect";
+import Spinner from "./Spinner";
 
 const Form = ({changeShow}) => {
     const { percentage, profit, subTotal, total, setPercentage } = useProductCalculations()
-    const { saveCestino, cestino, editMode, setEditMode, products, setProducts, setProductEdit, nameBack } = useCestino()
+    const { saveCestino, cestino, editMode, setEditMode, products, setProducts, setProductEdit, nameBack, loading } = useCestino()
     const { image, setImage, setPreImage, preImage, handleImageUpload, deletedImage } = useImageUpload()
     const [name, setName] = useState("")
     const [id, setId] = useState(null)
@@ -44,13 +45,13 @@ const Form = ({changeShow}) => {
         e.preventDefault()
 
         if(name.trim() === ""){
-            return alertToast({tipe: "error", msg: "El nombre de la canasta no puede estar vació"})
+            return alertToast({type: "error", msg: "El nombre de la canasta no puede estar vació"})
         }
         if(name === nameBack.current){
-            return alertToast({tipe: "error", msg: "Esta Canasta ya Existe"})
+            return alertToast({type: "error", msg: `La canasta ${nameBack.current} ya existe`})
         }
         if(!products.length && Array.isArray(products)){
-            return alertToast({tipe: "warning", msg: "Se requiere al menos 1 producto."})
+            return alertToast({type: "warning", msg: "Se requiere al menos 1 producto."})
         }
         const whitOutId = products.map(({ id, ...prod }) => prod)
         const results = await saveCestino({name, products: whitOutId, subTotal, percentage, profit, total, id, image})
@@ -128,7 +129,7 @@ const Form = ({changeShow}) => {
             
             {/*Boton*/}
             <div className="flex justify-end">
-                <ButtomInput value={id ? "Guardar Edicion" : "Agregar Canasta"} handleSubmit={handleSubmit}/>
+                {loading ? <Spinner/> : <ButtomInput value={id ? "Guardar Edicion" : "Agregar Canasta"} handleSubmit={handleSubmit}/>}
             </div>
         </form>
     </Modal>

@@ -22,20 +22,20 @@ const ChangePassword = () => {
     e.preventDefault()
     
     if(Object.values(password).some(field => field === "")){
-      alertToast({tipe: "error", msg: "Todos los campos son obligatorios"})
+      alertToast({type: "error", msg: "Todos los campos son obligatorios"})
       return
     }
     
     if(!validatePassword(password.pwd_new)){
-      alertToast({tipe: "error", msg: "La nueva contraseña debe tener minimo 8 caracteres, 1 numero, mayusculas y caracter especial. (@ $ ! % * ? & + - /)"})
+      alertToast({type: "error", msg: "La nueva contraseña debe tener minimo 8 caracteres, 1 numero, mayusculas y caracter especial. (@ $ ! % * ? & + - /)"})
       return
     }
 
     const response = await savePassword(password)
     if(response.error){
-      alertToast({tipe: "error", msg: response.msg})
+      alertToast({type: "error", msg: response.msg})
     }else{
-      alertToast({tipe: "success", msg: response.msg})
+      alertToast({type: "success", msg: response.msg})
     }
   }
 

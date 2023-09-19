@@ -47,7 +47,7 @@ const NewPassword = () => {
           </form>
         )}
         {modifiedPassword && (
-          <Link className="block text-center my-5 text-gray-600" to={"/"}>
+          <Link className="block text-center my-5 text-gray-600 text-lg font-medium" to={"/auth"}>
             Iniciar Sesión
           </Link>
         )}

@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
-const alertToast = ({tipe, msg}) =>{
-    toast[tipe](msg, {
+const alertToast = ({type, msg}) =>{
+    toast[type](msg, {
         position: "top-right",
         autoClose: 5000,
         closeOnClick: true,

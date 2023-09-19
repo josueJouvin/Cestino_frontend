@@ -3,9 +3,10 @@ import useSwitch from "../hooks/useSwitch";
 import Form from "./Form";
 import { useLocation } from "react-router-dom";
 import ProductsCestino from "./ProductsCestino";
+import Spinner from "./Spinner";
 
 const Cestino = ({ cestino }) => {
-  const { setEdit, setEditMode, deletedCestino } = useCestino();
+  const { setEdit, setEditMode, deletedCestino, loading} = useCestino();
   const { show, changeShow } = useSwitch();
   const { name, profit, total, products } = cestino;
   const location = useLocation();
@@ -61,7 +62,7 @@ const Cestino = ({ cestino }) => {
               type="button"
               className="rounded-lg bg-red-600 py-3 px-5 text-center text-sm font-bold uppercase text-white hover:bg-red-700 shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85]"
             >
-              Eliminar
+               Eliminar
             </button>
           </section>
         </section>

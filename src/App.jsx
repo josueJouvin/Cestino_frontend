@@ -23,6 +23,7 @@ function App() {
       <AuthProvider>
         <CestinoProvider>
           <Routes>
+           
             <Route path="/" element={<LandingPage/>}/>
             <Route path="/*" element={<NotFound/>}/>
 

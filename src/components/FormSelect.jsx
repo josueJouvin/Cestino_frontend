@@ -11,7 +11,7 @@ const FormSelect = ({formProducts, handleChangeProducts}) => {
         const {nameproduct, price, quantity, unitmeasure} = formProducts
 
         if([nameproduct.trim(),price,quantity,unitmeasure].includes("")){
-            alertToast({tipe: "error", msg: "El producto no debe tener campos vacios"})
+            alertToast({type: "error", msg: "El producto no debe tener campos vacios"})
             return
         }
         

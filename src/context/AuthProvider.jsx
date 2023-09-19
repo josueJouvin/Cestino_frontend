@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import axiosCustomer from "../config/axios";
 import { useNavigate } from "react-router-dom";
+import { configJsonHeaders } from "../helpers/configJsonHeaders";
 
 const AuthContext = createContext()
 const AuthProvider = ({children}) => {
@@ -10,19 +11,8 @@ const AuthProvider = ({children}) => {
     
     useEffect(() => {
         const authUser = async () =>{
-            const token = localStorage.getItem('token')
-            if(!token){
-                setLoading(false)
-                return  
-            }
-
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization:`Bearer ${token}`
-                }
-            }
-
+            const config = await configJsonHeaders(setLoading)
+            
             try {
                 const { data } = await axiosCustomer("/vendedor/profile", config)
                 setAuth(data)
@@ -42,18 +32,7 @@ const AuthProvider = ({children}) => {
     }
 
     async function updateProfile(profile) {
-        const token = localStorage.getItem('token')
-        if(!token){
-            setLoading(false)
-            return  
-        }
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization:`Bearer ${token}`
-            }
-        }
+        const config = await configJsonHeaders(setLoading)
 
         try {
             const url = `/vendedor/profile/${profile._id}`
@@ -71,18 +50,7 @@ const AuthProvider = ({children}) => {
     }
 
     async function savePassword(password) {
-        const token = localStorage.getItem('token')
-        if(!token){
-            setLoading(false)
-            return  
-        }
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization:`Bearer ${token}`
-            }
-        }
+        const config = await configJsonHeaders(setLoading)
     
         try {
             const url = "/vendedor/update-password"
@@ -97,6 +65,7 @@ const AuthProvider = ({children}) => {
             }
         }
     }
+    
     return(
         <AuthContext.Provider value={{auth, setAuth, loading, logOut, updateProfile, savePassword}}>
             {children}

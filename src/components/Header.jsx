@@ -5,7 +5,7 @@ const Header = () => {
   const { auth } = useAuth();
 
   return (
-    <header className="lg:static py-16">
+    <header className="lg:static py-8 md:py-16">
         <Link to="/admin" className="container mx-auto">
             <h1 className="font-bold text-3xl text-white text-center overflow-hidden">{auth.companyName ? auth.companyName : "Cestino"}</h1>
         </Link>

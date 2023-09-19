@@ -1,4 +1,5 @@
 import { useState } from "react";
+import alertToast from "../utilities/alertToast";
 
 const useValidation = () =>{
     const [alert, setAlert] = useState({})
@@ -20,7 +21,7 @@ const useValidation = () =>{
       const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s'_-]+$/
 
       if(!nameRegex.test(formData.name)){
-        return setAlert({msg: "Nombre inválido. No debe contener caracteres especiales.", error: true})
+        return alertToast({type:"error", msg:"Nombre inválido. No debe contener caracteres especiales." })
       }
       return true
     }
@@ -29,7 +30,7 @@ const useValidation = () =>{
       const emailRegex = /^[a-zA-Z0-9._%+-]*[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]*[a-zA-Z][a-zA-Z0-9._%+-]+\.[a-zA-Z]{2,}$/;
 
       if(!emailRegex.test(formData.email)){
-        return setAlert({msg: "Correo no valido", error:true})
+        return alertToast({type:"error", msg:"Correo no valido." })
       }
       return true
     }
@@ -37,12 +38,11 @@ const useValidation = () =>{
     function validatePassword(password) {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+\\/.-])[A-Za-z\d@$!%*?&+\\/.-]{8,}$/;
       if (!passwordRegex.test(password ? password : formData.password)) {
-        return setAlert({ msg: `La contraseña debe cumplir con los siguientes requisitos:\n
+        return alertToast({type:"error", msg:`La contraseña debe cumplir con los siguientes requisitos:\n
         • Minimo 8 Caracteres
-        • Al menos una letra mayúscula
-        • Al menos un número
-        • Al menos un carácter especial (@ $ ! % * ? & + - /)`, 
-        error: true, mod: true});
+        • Una mayúscula
+        • Un número
+        • Al menos un carácter especial (@ $ ! % * ? & + - /)` })
       }
       return true
     }
