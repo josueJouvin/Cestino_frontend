@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ButtomInput from "../components/ButtomInput";
 import useAuth from "../hooks/useAuth";
 import alertToast from "../utilities/alertToast";
-import { Link } from "react-router-dom";
 import Titles from "../components/Titles";
 
 const EditProfile = () => {

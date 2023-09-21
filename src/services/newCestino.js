@@ -6,7 +6,6 @@ export async function newCestino({ formData }) {
   if (!config) return;
 
   const { data } = await axiosCustomer.post("/producto", formData, config);
-  console.log(data);
   const { createdAt, updatedAt, __v, ...cestinoStored } = data;
   return cestinoStored;
 }

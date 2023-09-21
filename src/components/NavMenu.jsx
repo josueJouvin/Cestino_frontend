@@ -79,7 +79,7 @@ const NavMenu = ({ changeShow, show }) => {
           </div>
         </div>
 
-        <div className="flex justify-end mr-4 mb-7 lg:hidden">
+        <div className="flex justify-end mr-6 mb-8 lg:hidden">
           <button onClick={changeShow}>
             <Close />
           </button>

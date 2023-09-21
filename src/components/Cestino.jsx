@@ -3,10 +3,9 @@ import useSwitch from "../hooks/useSwitch";
 import Form from "./Form";
 import { useLocation } from "react-router-dom";
 import ProductsCestino from "./ProductsCestino";
-import Spinner from "./Spinner";
 
 const Cestino = ({ cestino }) => {
-  const { setEdit, setEditMode, deletedCestino, loading} = useCestino();
+  const { setEdit, setEditMode, deletedCestino} = useCestino();
   const { show, changeShow } = useSwitch();
   const { name, profit, total, products } = cestino;
   const location = useLocation();

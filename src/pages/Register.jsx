@@ -8,6 +8,8 @@ import TextPublic from "../components/TextPublic";
 import useValidation from "../hooks/useValidation";
 import alertToast from "../utilities/alertToast";
 import { useRef } from "react";
+import { validFields } from "../utilities/validFields";
+
 
 const Register = () => {
   const {formData, handleChange, validateEmail, validateName,validatePassword} = useValidation()
@@ -18,11 +20,8 @@ const Register = () => {
   async function handleSubmit(e){
     e.preventDefault() 
 
-    if([name.trim(),email.trim(),password.trim(),repeatPassword.trim()].includes("")){
-      return alertToast({type:"error", msg:"Todos los campos son obligatorios." })
-    }
-
-    if(!validateName() || !validateEmail() || !validatePassword()) return
+    const requiredFields = [name,email,password,repeatPassword]
+    if(!validFields(requiredFields) ||!validateName() || !validateEmail() || !validatePassword()) return
     
     if(password !== repeatPassword){
       return alertToast({type:"error", msg:"Los Password no son iguales."})
@@ -83,7 +82,6 @@ const Register = () => {
             ref={captchaRef}
             sitekey= {import.meta.env.VITE_CAPTCHA_KEY}
           />
-
           <ButtomInput value="Crear Cuenta"/>
         </form>
         

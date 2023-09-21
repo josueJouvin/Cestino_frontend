@@ -16,6 +16,7 @@ const NewPassword = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     if(!validatePassword()) return
 
     try {

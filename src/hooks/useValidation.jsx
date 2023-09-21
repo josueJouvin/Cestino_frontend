@@ -21,6 +21,7 @@ const useValidation = () =>{
       const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s'_-]+$/
 
       if(!nameRegex.test(formData.name)){
+        console.log("first")
         return alertToast({type:"error", msg:"Nombre inválido. No debe contener caracteres especiales." })
       }
       return true

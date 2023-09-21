@@ -11,6 +11,7 @@ import alertToast from "../utilities/alertToast";
 
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { validFields } from "../utilities/validFields";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,9 +26,8 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();  
 
-    if ([email.trim(), password.trim()].includes("")) {
-      return alertToast({type:"error", msg:"Todos los campos son obligatorios." })
-    }
+    const requiredFields = [email, password]
+    if(!validFields(requiredFields))
 
     if (!validateEmail()) return;
     if (!validatePassword()) { 

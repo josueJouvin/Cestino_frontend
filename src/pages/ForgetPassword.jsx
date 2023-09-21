@@ -6,6 +6,7 @@ import TextPublic from "../components/TextPublic";
 import useValidation from "../hooks/useValidation";
 import alertToast from "../utilities/alertToast";
 import { useRef } from "react";
+import { validFields } from "../utilities/validFields";
 
 const ForgetPassword = () => {
   const { handleChange, formData, validateEmail } = useValidation();
@@ -16,12 +17,8 @@ const ForgetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (email.trim() === "") {
-      return alertToast({type:"error", msg: "El email es obligatorio."})
-    }
-
-    if (!validateEmail()) return;
-
+    if(!validFields([email]) || !validateEmail()) return
+ 
     if (confirmedRef.current === undefined && email === sendEmailRef.current) {
       return alertToast({type:"error", msg: "El usuario no existe."})
     }

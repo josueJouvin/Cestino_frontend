@@ -1,10 +1,11 @@
 import { useState } from "react";
-import ButtomInput from "../components/ButtomInput"
 import { Link } from "react-router-dom";
+import ButtomInput from "../components/ButtomInput"
 import alertToast from "../utilities/alertToast";
 import useValidation from "../hooks/useValidation";
 import useAuth from "../hooks/useAuth"
 import PasswordInput from "../components/PasswordInput";
+import { validFields } from "../utilities/validFields";
 
 const ChangePassword = () => {
   const { savePassword } = useAuth()
@@ -20,11 +21,7 @@ const ChangePassword = () => {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    
-    if(Object.values(password).some(field => field === "")){
-      alertToast({type: "error", msg: "Todos los campos son obligatorios"})
-      return
-    }
+    if(!validFields([password.pwd_current, password.pwd_new]))return
     
     if(!validatePassword(password.pwd_new)){
       alertToast({type: "error", msg: "La nueva contraseña debe tener minimo 8 caracteres, 1 numero, mayusculas y caracter especial. (@ $ ! % * ? & + - /)"})
@@ -38,8 +35,6 @@ const ChangePassword = () => {
       alertToast({type: "success", msg: response.msg})
     }
   }
-
-
 
   return (
     <section className=" flex flex-col gap-10 w-full px-5 md:px-0">
