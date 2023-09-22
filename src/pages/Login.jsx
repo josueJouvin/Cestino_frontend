@@ -27,9 +27,8 @@ export default function Login() {
     e.preventDefault();  
 
     const requiredFields = [email, password]
-    if(!validFields(requiredFields))
-
-    if (!validateEmail()) return;
+    if(!validFields(requiredFields) || !validateEmail()) return 
+    
     if (!validatePassword()) { 
       return alertToast({type:"error" ,msg: "Password no valido"});
     }
