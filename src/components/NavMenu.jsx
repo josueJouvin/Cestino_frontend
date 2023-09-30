@@ -17,7 +17,7 @@ const NavMenu = ({ changeShow, show }) => {
   const { logOut, auth } = useAuth();
   const {handleClick, isDarkMode} = useDarkMode()
   return (
-    <aside className="bg-lime-600 dark:bg-lime-700 px-5 flex flex-col text-white font-semibold lg:text-2xl lg:w-1/5 lg:fixed lg:h-full">
+    <aside className="bg-lime-600 dark:bg-lime-700 px-5 flex flex-col text-white font-semibold lg:text-2xl lg:w-1/5 lg:fixed lg:h-full lg:overflow-y-scroll xl:overflow-hidden">
       <Header />
       <section
         className={`fixed z-10 bottom-0 right-0 bg-lime-600 dark:bg-lime-700 w-1/2 p-2 rounded-tl-lg border-t-2 border-l-2 border-lime-700 dark:border-green-500 lg:h-full lg:static lg:z-0 lg:border-0 lg:w-full lg:p-0 lg:rounded-none lg:border-none ${!show && "hidden lg:block"}`}
